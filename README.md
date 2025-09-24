@@ -56,7 +56,7 @@
     - Conditional quantum mutual information 
 
 - **API Documents**:
-    - API documents can be found in this website https://quair.github.io/QRLab/api/.
+    - API documents can be found in this website https://quairkit.com/QRLab
 
 ## Requirements
 1. QETLAB == 0.9
