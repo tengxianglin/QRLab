@@ -1,6 +1,6 @@
 function Jout = LinkProd(JA, JB, DIM)
-    % Link Product of Two Quantum channels, where Aout of JA is linked with
-    % the Bin of JB.
+    % Link Product of two Quantum channels, where A_out of JA is linked with
+    % the B_in of JB.
     %
     % :Required packages:
     %   `QETLAB  <http://www.qetlab.com/Main_Page>`_
