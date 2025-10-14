@@ -1,15 +1,17 @@
 function val = VirtualRecovery(rho, dim)
 
+    % Compute the virtual recovery measure of a tripartite state :math:`\rho_{ABC}`.
+    %
     % .. math::
     %
     %     R^v_{rec}(\rho_{ABC}) = \log\min\{c_1+c_2:(c_1\mathcal{N}_1 - c_2\mathcal{N}_2)(\rho_{AB}) = \rho_{ABC}, c_{1,2}\geq 0, \mathcal{N}_{1,2}\in\operatorname{CPTP}(B,B\otimes C)\}
     %
     % Args:
-    %   JN (numeric): The Choi matrix of the bipartite channel.
-    %   dim (numeric): The array storing input and output dimensions.
+    %   rho (numeric): The density matrix of the tripartite state :math:`\rho_{ABC}`.
+    %   dim (numeric): Dimension array :math:`[d_A, d_B, d_C]` for subsystems :math:`A,B,C`.
     %
     % Returns:
-    %   numeric: The virtual recovery of tripartite state.
+    %   numeric: The virtual recovery of the tripartite state (in bits).
     %
     % Raises:
     %   error: If either input/output dimension does not match, an error is raised.
@@ -17,7 +19,7 @@ function val = VirtualRecovery(rho, dim)
     % Note:
     %   Chen, Y. A., Zhu, C., He, K., Jing, M., & Wang, X. (2023). 
     %   Virtual Quantum Markov Chains. 
-    %   arXiv preprint arXiv:2312.02031. Accept in IEEE TIT.
+    %   arXiv preprint arXiv:2312.02031. Accepted to IEEE Transactions on Information Theory.
 
     da = dim(1);
     db = dim(2);
