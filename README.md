@@ -55,56 +55,78 @@
 
     - Conditional quantum mutual information 
 
-- **API Documents**:
-    - API documents can be found in this website https://quairkit.com/QRLab
+API reference: https://quairkit.com/QRLab
 
 ## Requirements
-1. QETLAB == 0.9
-2. CVX == 2.1
-
+- MATLAB (desktop)
+- QETLAB == 0.9
+- CVX == 2.1
 
 ## Installation
 1. Clone QRLab to your local machine.
-2. Download QETLAB 0.9. You could download it from https://qetlab.com/.
-3. Add QRLab and QETLAB to MATLAB's path​, through command
+2. Download QETLAB 0.9: https://qetlab.com/
+3. Add QRLab and QETLAB to the MATLAB path:
 ```matlab
 addpath(genpath('...\QETLAB-0.9'));
-addpath(genpath('...\QRlab'));
+addpath(genpath('...\QRLab'));
+savepath; % optional: persist paths
 ```
-4. Download and install CVX 2.1. You could download it from https://cvxr.com/cvx/.
-Install CVX on Windows
+4. Install CVX 2.1: https://cvxr.com/cvx/
+- Windows:
 ```matlab
-cd yourpath\cvx;​
+cd yourpath\cvx;
 cvx_setup;
 ```
-Install CVX on Linux or a Mac
+- Linux/macOS:
 ```matlab
-cd ~/MATLAB/cvx;​
+cd ~/MATLAB/cvx;
 cvx_setup;
 ```
+5. (Optional) For full magic qubit functionality, install channel_magic 2.0:
+- https://github.com/jamesrseddon/channel_magic
 
-5. To fully unlock the magic qubit related functions, it is necessary to install channel_magic 2.0 in https://github.com/jamesrseddon/channel_magic.
-
-## Getting Started: Use Cases
-
-To use the package, simply call the function you need with appropriate parameters. For example:
-
+## Quick Start
+Verify your setup with a simple entanglement calculation:
 ```matlab
-% To calculate the logarithmic negativity for a given state
-rho = MaxEntangled(2) * MaxEntangled(2)'; % Define a quantum state
-LN = LogNeg(rho);
-disp('Logarithmic Negativity:');
+% Create a 2-qubit maximally entangled state (Bell state)
+rho = MaxEntangled(2) * MaxEntangled(2)'; % from QETLAB
+LN = LogNeg(rho);                          % from QRLab
+disp('Logarithmic Negativity (expected ~1 for Bell state):');
 disp(LN);
 ```
+If LN prints a value close to 1, QRLab and dependencies are working.
 
+## Usage and Examples
+- Function help in MATLAB:
+```matlab
+help LogNeg
+```
+- Explore additional functions via the API docs: https://quairkit.com/QRLab
+- Many features (entanglement, coherence, magic, quasi-theory, supermaps, seesaw) follow a consistent functional interface; see the documentation for arguments, options, and examples.
 
-## More functions are coming.
+## Troubleshooting
+- Paths not set or missing functions:
+  - Ensure both QRLab and QETLAB are on the MATLAB path:
+  ```matlab
+  addpath(genpath('...\QETLAB-0.9'));
+  addpath(genpath('...\QRLab'));
+  which LogNeg -all
+  which MaxEntangled -all
+  ```
+- CVX not initialized:
+  - Run cvx_setup and ensure no errors are reported.
+- Version mismatches:
+  - Confirm QETLAB == 0.9 and CVX == 2.1 specifically.
+- Magic functions unavailable:
+  - Install channel_magic 2.0 and add it to the MATLAB path if you need qubit magic tools.
 
+If issues persist, compare your steps with Installation and Quick Start, then consult the API docs.
 
 ## Contributing
+Contributions to expand and improve QRLab are welcome. Typical flow:
+- Open an issue describing a bug/feature.
+- Fork the repository, create a feature branch, and submit a pull request.
+- Add concise tests/examples where appropriate.
 
-Contributions to expand and improve this package are welcome.
-
-## Acknowledgement
-
-We acknowledge the use of the [CVXQUAD](https://github.com/hfawzi/cvxquad) package, a tool for MATLAB-based convex optimization. This package offers several essential functions, such as calculating the von Neumann entropy and quantum relative entropy, which have been invaluable to our research.
+## Acknowledgements
+We acknowledge the CVXQUAD package (https://github.com/hfawzi/cvxquad) for MATLAB-based convex optimization utilities including von Neumann entropy and quantum relative entropy, which have been valuable in this research.
