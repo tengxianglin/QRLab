@@ -1,5 +1,6 @@
 function val = LogFidBiNeg(rho, varargin)
-
+    % Compute the logarithmic fidelity associated with bi-negativity constraints.
+    %
     % .. math::
     %
     %     E^{1/2}_{\operatorname{N},2}(\rho_{AB}) = \log\max F(\rho,

@@ -1,5 +1,6 @@
 function [val, JR] = RelEntropyRecovery(rhoABC, dim)
-
+    % Compute the relative entropy of recovery and the optimal recovery channel for a tripartite state.
+    %
     % .. math::
     %
     %     R_{rec}(\rho_{ABC}) = \min_{\mathcal{R}:B\rightarrow BC} D(\rho_{ABC}\| (\mathcal{I}_A \otimes \mathcal{R})(\rho_{AB}))
