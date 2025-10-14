@@ -1,3 +1,5 @@
+Test the correctness of functions in resource theory of magic
+
 % clear;
 load('Amat1.mat'); % Load A matrix for all 1-qubit stabiliser states.
 A_mat_1 = Amat1;

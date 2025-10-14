@@ -1,4 +1,4 @@
-%% Test the resource of quasitheory 
+%% Test the correctness of functions in resource of quasitheory 
 
 % Prepare coefficients
 I = [1 0; 0 1];

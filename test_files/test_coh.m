@@ -1,4 +1,4 @@
-%% Test the resource of coherence
+%% Test the correctness of functions in resource of coherence
 
 % Prepare coefficients
 tol = 1e-8;
