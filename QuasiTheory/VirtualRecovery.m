@@ -17,7 +17,7 @@ function val = VirtualRecovery(rho, dim)
     % Note:
     %   Chen, Y. A., Zhu, C., He, K., Jing, M., & Wang, X. (2023). 
     %   Virtual Quantum Markov Chains. 
-    %   arXiv preprint arXiv:2312.02031.
+    %   arXiv preprint arXiv:2312.02031. Accept in IEEE TIT.
 
     da = dim(1);
     db = dim(2);

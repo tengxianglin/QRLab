@@ -5,11 +5,11 @@ function val = GammaPPT(JN, dim)
     %     \gamma_{\operatorname{PPT}}(\mathcal{N}) = \min\{p_+ + p_-:\mathcal{N} = p_+\mathcal{M_+} - p_-\mathcal{M_-}\},
     %
     % Args:
-    %   JN (numeric): The Choi matrix of the bipartite channel.
+    %   JN (numeric): The Choi matrix of the bi-partite channel.
     %   dim (numeric): The array storing input and output dimensions.
     %
     % Returns:
-    %   numeric: The PPT-assisted sampling overhead of bipartite channel.
+    %   numeric: The PPT-assisted sampling overhead of bi-partite channel.
     %
     % Raises:
     %   error: If either input/output dimension does not match, an error is raised.
@@ -17,7 +17,7 @@ function val = GammaPPT(JN, dim)
     % Note:
     %   Jing, M., Zhu, C., & Wang, X. (2024). 
     %   Circuit Knitting Faces Exponential Sampling Overhead Scaling Bounded by Entanglement Cost. 
-    %   arXiv preprint arXiv:2404.03619.
+    %   arXiv preprint arXiv:2404.03619. Accept in PhysRevA.111.012433
 
     dA = dim(1);
     dB = dim(2);
