@@ -129,5 +129,8 @@ If issues persist, compare steps with Installation and Quick Start, then consult
 - Add concise tests/examples where appropriate. | 视情况补充简要示例或测试。
 
 ## Acknowledgements | 致谢
+The development of the software package is partially supported by the National Key R&D Program of China (Grant No. 2024YFE0102500).
+本软件包的开发部分得到了中国国家重点研发计划（项目编号：2024YFE0102500）的资助。
+
 We acknowledge the CVXQUAD package (https://github.com/hfawzi/cvxquad) for MATLAB-based convex optimization utilities including von Neumann entropy and quantum relative entropy, which have been valuable in this research.
 感谢 CVXQUAD（https://github.com/hfawzi/cvxquad）提供的基于 MATLAB 的凸优化工具（如冯诺依曼熵、量子相对熵），对本项目研究帮助甚大。
