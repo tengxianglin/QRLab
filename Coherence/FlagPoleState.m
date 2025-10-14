@@ -1,16 +1,17 @@
 function state = FlagPoleState(dim, p)
-% Provide a flag pole state
+% Construct a flag-pole state in the computational basis.
 %
 % .. math::
-%    \ket{\psi} = \sqrt{p} \ket{0} + \sum_{i=1}^{d-1}
-%    \sqrt{\frac{1-p}{d-1}}\ket{i}
+%    \ket{\psi} = \sqrt{p}\,\ket{0} + \sum_{i=1}^{d-1} \sqrt{\frac{1-p}{d-1}}\,\ket{i},
+%
+% so that :math:`\rho = \ket{\psi}\!\bra{\psi}` is a pure state.
 %
 % Args:
-%     dim (numeric): The dimension of the system.
-%     p (numeric): The amplitude of the flag.
+%     dim (numeric): System dimension :math:`d \ge 2`.
+%     p (numeric): Flag amplitude :math:`p \in [0,1]`.
 %
 % Returns:
-%     state (matrix): The density matrix of the flag state.
+%     state (matrix): Density matrix :math:`\rho = \ket{\psi}\!\bra{\psi}` of the flag-pole state.
 
 ket = [sqrt(p)];
 for i = 1:dim-1;

@@ -1,29 +1,25 @@
 function distance = SimulateCoherentChannel(target_channel, resource_state, free_op, varargin)
-    % Find the optimal free operation :math:`\mathcal{M}` to minimize
-    % diamond norm between the simulated channel
-    % :math:`\mathcal{M}(\omega\otimes\cdot)` and the target channel
-    % :math:`\mathcal{N}` 
+    % Find the optimal free operation :math:`\mathcal{M}` that minimizes the
+    % diamond-norm distance between the simulated channel :math:`\mathcal{M}(\omega \otimes \cdot)`
+    % and the target channel :math:`\mathcal{N}`.
     %
     % .. math::
-    %    \| \mathcal{M}(\omega \otimes \cdot) - \mathcal{N}\|_\diamond,
+    %    \min_{\mathcal{M}}\; \bigl\| \mathcal{M}(\omega \otimes \cdot) - \mathcal{N} \bigr\|_\diamond
     %
-    % where :math:`\omega` is the given resource state.
+    % where :math:`\omega` is the provided resource state.
     %
     % Args:
-    %     target_channel (matrix): The Choi matrix of the input channel :math:`\mathcal{N}`.
-    %     reousrce_state (matrix): The density matrix of the given resource
-    %      state :math:`\omega`.
-    %     free_op (numeric): The choice of free operation
-    %      :math:`\mathcal{M}`, we can choose 0 (MIO) or 1 (DIO).
-    %     varargin (list): Dimension of the given channel, default to
-    %      [d_i,d_o], with d_i=d_o.
+    %     target_channel (matrix): Choi matrix :math:`J_\mathcal{N} \in \mathbb{C}^{(d_i d_o)\times(d_i d_o)}` of the target channel :math:`\mathcal{N}`.
+    %     resource_state (matrix): Density matrix :math:`\omega \in \mathbb{C}^{d_r\times d_r}` of the resource state.
+    %     free_op (numeric): Choice of free operation :math:`\mathcal{M}`; `0` for MIO, `1` for DIO.
+    %     varargin (list): Channel dimensions, default `[d_i, d_o]` with `d_i = d_o = \sqrt{\text{size}(J_\mathcal{N},1)}`.
     %
     % Returns:
-    %     distance (numeric): The diamond norm between the simulated channel and the target channel. 
+    %     distance (numeric): Diamond-norm distance between the simulated channel and the target channel.
     %
     % Note:
-    %     Díaz, M. G., Fang, K., Wang, X., Rosati, M., Skotiniotis, M., Calsamiglia, J., & Winter, A. (2018). 
-    %     Using and reusing coherence to realize quantum processes. 
+    %     Díaz, M. G., Fang, K., Wang, X., Rosati, M., Skotiniotis, M., Calsamiglia, J., & Winter, A. (2018).
+    %     Using and reusing coherence to realize quantum processes.
     %     Quantum, 2, 100.
 
 
