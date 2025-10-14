@@ -24,7 +24,7 @@ function [rhoAB, A, B] = OptCHSHgame(C, dim)
     B(:,:,1,2) = RandomDensityMatrix(dB,0,1);
     B(:,:,2,2) = eye(dB) - B(:,:,1,2);
 
-    %% SDP formulation
+    %% SDP formulation (fix A then optimize B, fix B then optimize A. Continue the process.)
     for k = 1:10
         %% step 1 optimize A measurement
         cvx_begin sdp quiet
@@ -111,5 +111,6 @@ function [rhoAB, A, B] = OptCHSHgame(C, dim)
     rhoAB = rhoAB; 
     A = A; B = B;
     fprintf('The best CHSH score is %d.\n', dis);
+
 end
 
