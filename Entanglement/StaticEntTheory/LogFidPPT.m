@@ -1,5 +1,6 @@
 function val = LogFidPPT(rho, varargin)
-    
+    % Compute the PPT-constrained logarithmic fidelity with the target state.
+    %
     % .. math::
     %
     %     E_{\operatorname{PPT}}(\rho_{AB}) = \log\max F(\rho, \sigma) \
@@ -11,7 +12,7 @@ function val = LogFidPPT(rho, varargin)
     %   varargin (numeric): The array storing dimensions of subsystems A and B.
     %
     % Returns:
-    %   numeric: The PPT-entanglement of :math:`\rho_{AB}`.
+    %   numeric: The PPT entanglement measure of :math:`\rho_{AB}`, defined via fidelity maximization.
     %
     % Raises:
     %   error: If either input/output dimension does not match, an error is raised.

@@ -6,13 +6,13 @@ function [val, JR] = RelEntropyRecovery(rhoABC, dim)
     % 
     % Args:
     %     rhoABC (numeric): The density matrix of the tripartite target state.
-    %     dim (numeric): The dimension of the composite systems of the state.
+    %     dim (numeric): The dimension array of the composite systems :math:`[d_A,d_B,d_C]`.
     %
     % Returns:
     %   [numeric, numeric]:
-    %     val: The relative entropy of recovery of :math:`\rho_{ABC}`.
+    %     val: The relative entropy of recovery of :math:`\rho_{ABC}` (in bits).
     % 
-    %     JR: The Choi matrix of the recovery channel.
+    %     JR: The Choi matrix of the optimal recovery channel :math:`\mathcal{R}:B\to BC`.
 
     assert(numel(dim) >= 3, 'The number of subsystems must be 3!');
 

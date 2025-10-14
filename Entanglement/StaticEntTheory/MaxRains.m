@@ -1,5 +1,6 @@
 function val = MaxRains(rho, varargin)
-    
+    % Compute the max-Rains entropy (improved logarithmic negativity).
+    %
     % .. math::
     %
     %     E_{\operatorname{W}}(\rho_{AB}) =
@@ -11,7 +12,7 @@ function val = MaxRains(rho, varargin)
     %   varargin (numeric): The array storing dimensions of subsystems A and B.
     %
     % Returns:
-    %   numeric: The improved logarithmic negativity (max-Rains entropy) of :math:`\rho_{AB}`.
+    %   numeric: The max-Rains entropy of :math:`\rho_{AB}` (improved logarithmic negativity).
     %
     % Raises:
     %   error: If either input/output dimension does not match, an error is raised.

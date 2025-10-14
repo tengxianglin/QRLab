@@ -1,5 +1,6 @@
 function [cvx_optval, X] = TempLogNeg(rho, varargin)
-    
+    % Compute the tempered logarithmic negativity of a bipartite state.
+    %
     % .. math::
     %
     %     E_N^{\tau}(\rho_{AB}).
@@ -9,7 +10,7 @@ function [cvx_optval, X] = TempLogNeg(rho, varargin)
     %   varargin (numeric): The array storing dimensions of subsystems A and B.
     %
     % Returns:
-    %   numeric: The Temperal logarithmic negativity of :math:`\rho_{AB}`.
+    %   numeric: The tempered logarithmic negativity of :math:`\rho_{AB}`.
     %
     % Raises:
     %   error: If either input/output dimension does not match, an error is raised.

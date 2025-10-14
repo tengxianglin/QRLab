@@ -1,4 +1,6 @@
 function val = MaxLogNeg(JN, dim)
+    % Compute the generalized :math:`\kappa`-entanglement (max-logarithmic negativity) of a bipartite channel.
+    %
     % .. math::
     %
     %     LN_{\max}(\mathcal{N}) = \log \inf\{\max\{\|P_{AB}\|_{\infty},
@@ -9,8 +11,7 @@ function val = MaxLogNeg(JN, dim)
     %     dim (numeric): The array storing input and output dimensions.
     %
     % Returns:
-    %     numeric: The generalized :math:`\kappa`-entanglement 
-    %     (or max-logarithmic negativity) of bipartite channel.
+    %     numeric: The generalized :math:`\kappa`-entanglement (max-logarithmic negativity) of the bipartite channel (in bits/use).
     %
     % Raises:
     %     error: If either input/output dimension does not match, an error is raised.
@@ -56,4 +57,4 @@ function val = MaxLogNeg(JN, dim)
 
     l2 = log2(k);
     val = max([l1, l2]);
-end 
+end

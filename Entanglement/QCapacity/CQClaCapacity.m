@@ -1,5 +1,7 @@
 function val = CQCapacity(map_alph)
 
+    % Compute the classical capacity of a classical-quantum (CQ) channel.
+    %
     % .. math::
     %
     %     C(\Phi) = \max S\left(\sum_{x\in\mathcal{X}} p_x \Phi(x)\right) - \sum_{x\in\mathcal{X}} p_x S(\Phi(x))
@@ -8,12 +10,11 @@ function val = CQCapacity(map_alph)
     % and :math:`\Phi:\mathcal{X}\rightarrow \mathcal{D}(\mathcal{H})` is some classical-quantum channel.
     % 
     % Args:
-    %     map_alph (numeric): mapping data of the CQ-channel, should be stored in a 3D-tensor with the 
-    %     first index representing the labelling :math:`x\in \mathcal{X}` and last two indices give 
-    %     mapped density operators.
+    %     map_alph (numeric): Mapping tensor of the CQ channel. A 3D array whose first index
+    %       enumerates :math:`x\in\mathcal{X}`, and the last two indices contain the density matrices :math:`\Phi(x)`.
     %
     % Returns:
-    %     numeric: The capacity value of :math:`\Phi`.
+    %     numeric: The capacity value of :math:`\Phi` (in bits/use).
     %
     % Note:
     %     Hayashi, M., & Nagaoka, H. (2003). 

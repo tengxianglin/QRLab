@@ -1,5 +1,7 @@
 function out = Eeta(rho, varargin)
 
+    % Compute the :math:`\eta`-entanglement via an operator norm program.
+    %
     % .. math::
     %
     %     E_{\eta}(\rho_{AB}) = \max - \log\|Y_{AB}^{T_{B}}\|_{\infty} \

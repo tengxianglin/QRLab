@@ -1,5 +1,6 @@
 function val = RainsBound(rho, varargin)
-
+    % Compute the Rains bound via relative entropy distance to the PPT' set.
+    %
     % .. math::
     %
     %     R(\rho_{AB}) = \min\operatorname{D}(\rho_{AB}\|\sigma_{AB}), \
@@ -11,7 +12,7 @@ function val = RainsBound(rho, varargin)
     %   varargin (numeric): The array storing dimensions of subsystems A and B.
     %
     % Returns:
-    %   numeric: The Rains' bound of :math:`\rho_{AB}`.
+    %   numeric: The Rains bound of :math:`\rho_{AB}`.
     %
     % Raises:
     %   error: If either input/output dimension does not match, an error is raised.

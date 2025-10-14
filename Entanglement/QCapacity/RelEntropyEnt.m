@@ -1,15 +1,16 @@
 function val = RelEntropyEnt(rho, dim)
-
+    % Compute the PPT relative entropy of entanglement.
+    %
     % .. math::
     %
     %     E_{\operatorname{PPT}}(\rho) = \min_{\tau\in\operatorname{PPT}} D(\rho\| \tau)
     % 
     % Args:
     %     rho (numeric): The density matrix of the target state.
-    %     dim (numeric): The dimension of the composite systems of the state.
+    %     dim (numeric): The dimension array :math:`[d_A,d_B]`.
     %
     % Returns:
-    %     numeric: The PPT relative entropy of :math:`\rho`.
+    %     numeric: The PPT relative entropy of :math:`\rho` (in bits).
 
     dA = dim(1); 
     dB = dim(2);
