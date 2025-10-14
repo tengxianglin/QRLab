@@ -1,4 +1,4 @@
-%% SDP for quantum state discrimination
+%% SDP for quantum state discrimination (example for random states)
 clear;
 
 %% Random density operators rho and sigma
