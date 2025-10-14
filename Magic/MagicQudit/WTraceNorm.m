@@ -1,8 +1,8 @@
 function [output] = WTraceNorm(PhaseOp, rho)
-    % Compute the Wigner Trace Norm of a linear Operator
+    % Compute the Wigner trace norm of a linear operator with respect to a phase-space frame.
     %
     % Args:
-    %   PhaseOp (numeric): Cell array of Phase space operators.
+    %   PhaseOp (numeric): Cell array of phase-space point operators (frame).
     %   rho (numeric): Density matrix.
     %
     % Returns:
@@ -15,8 +15,8 @@ function [output] = WTraceNorm(PhaseOp, rho)
     % :Examples:
     %   .. code-block:: matlab
     %
-    %       [output] = WTraceNorm(PhaseOp, rho);
-    %       % Calculate the Wigner Trace Norm of rho.
+    %       output = WTraceNorm(PhaseOp, rho);
+    %       % Compute the Wigner trace norm of rho given a phase-space frame.
     % 
     % Note:
     %   Wang, X., Wilde, M. M., & Su, Y. (2020). 
