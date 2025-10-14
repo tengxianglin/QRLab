@@ -1,20 +1,23 @@
 function result = compute_entanglement_measures(rho_in, opts)
 % COMPUTE_ENTANGLEMENT_MEASURES
-%  Quick dispatcher for entanglement measures. Covers several commonly used
-%  indicators, supports selective evaluation, and allows custom extensions.
+%  Dispatcher for a set of common entanglement measures. Supports selective
+%  evaluation, custom extensions, basic preprocessing (Hermitization, trace
+%  normalization), and optional tabular output.
 %
 % Inputs:
-%   rho_in : density matrix or quantum channel Choi matrix
+%   rho_in : Density matrix (state) or channel Choi matrix.
 %   opts   : struct with optional fields:
-%            .dims            - subsystem dimensions (default: auto infer)
-%            .measures        - cell array of target measure names
-%            .custom_measures - struct; each field name is a measure label,
-%                               each value is a function handle f(rho, dims)
-%            .return_table    - true/false, convert output to table
-%            .normalize_trace - true/false, normalize trace automatically
+%            .dims            - [d_A, d_B]; if empty, infer square dims (default: []).
+%            .measures        - cell array of measure names to evaluate
+%                               (default: {'LogNeg','RainsBound','MaxRainsEntropy','TemperedLogNeg'}).
+%            .custom_measures - struct; each field is a label, each value a
+%                               function handle f(rho, dims) returning a scalar.
+%            .return_table    - true/false; if true, return a table (default: false).
+%            .normalize_trace - true/false; if true, Hermitize and normalize (default: true).
 %
 % Output:
-%   result : struct or table containing values and meta data
+%   result : struct with fields per measure (value, elapsed) + meta, or a table
+%            with columns Measure, Value, Elapsed when opts.return_table is true.
 
 % ---------- Option handling ----------
 if ~exist('opts','var') || isempty(opts)

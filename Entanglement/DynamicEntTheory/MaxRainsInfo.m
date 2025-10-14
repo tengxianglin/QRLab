@@ -1,5 +1,6 @@
 function val = MaxRainsInfo(JN, dim)
-    
+    % Compute the bidirectional max-Rains information of a bipartite channel.
+    %
     % .. math::
     %
     %     R^{2\rightarrow 2}_{\max}(\mathcal{N}) = \log \inf\{\|V_{AB} + Y_{AB}\|_{\infty}: 
@@ -10,7 +11,7 @@ function val = MaxRainsInfo(JN, dim)
     %   dim (numeric): The array storing input and output dimensions.
     %
     % Returns:
-    %   numeric: The bidirectional max-Rains information of bipartite channel.
+    %   numeric: The bidirectional max-Rains information of the bipartite channel (in bits/use).
     %
     % Raises:
     %   error: If either input/output dimension does not match, an error is raised.

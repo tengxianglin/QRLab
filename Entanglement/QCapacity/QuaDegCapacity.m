@@ -1,5 +1,6 @@
 function val = QuaDegCapacity(JN, dim)
-
+    % Compute the quantum capacity of a degradable channel via coherent information.
+    %
     % .. math::
     %
     %     Q(\Phi) = \max_{\rho\in\mathcal{D}(\mathcal{H})} I_c(\rho, \Phi)
@@ -11,8 +12,11 @@ function val = QuaDegCapacity(JN, dim)
     %     dim (numeric): The dimension of the input and output spaces of the channel.
     %
     % Returns:
-    %     numeric: The quantum capacity of the (degradable) channel :math:`\Phi`.
-
+    %     numeric: The quantum capacity of the (degradable) channel :math:`\Phi` (in bits/use).
+    %
+    % Note:
+    %     Assumes degradability and uses a degrading map to evaluate :math:`I_c`.
+    
     dA = dim(1); 
     dB = dim(2);
     U = chanconv(JN, 'choi', 'isom'); 

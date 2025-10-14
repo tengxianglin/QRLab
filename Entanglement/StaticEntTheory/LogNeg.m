@@ -1,8 +1,9 @@
 function val = LogNeg(rho, varargin)
-
+    % Compute the logarithmic negativity of a bipartite state.
+    %
     % .. math::
     %
-    %     E_{\operatorname{N}}(\rho_{AB}) = \log\|\rho^{T_{B}}_{AB}\|_1 
+    %     E_{\operatorname{N}}(\rho_{AB}) = \log\|\rho^{T_{B}}_{AB}\|_1.
     %
     % Args:
     %   rho (numeric): The density matrix of the bipartite state.

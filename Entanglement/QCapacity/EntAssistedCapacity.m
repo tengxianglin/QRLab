@@ -1,5 +1,7 @@
 function val = EntAssistedCapacity(JN, dim)
 
+    % Compute the entanglement-assisted classical capacity.
+    %
     % .. math::
     %
     %     C_{ea}(\Phi) = \max_{\rho\in\mathcal{D}(\mathcal{H})} I(\rho, \Phi)
@@ -11,7 +13,7 @@ function val = EntAssistedCapacity(JN, dim)
     %     dim (numeric): The dimension of the input and output spaces of the channel.
     %
     % Returns:
-    %     numeric: The entanglement-assisted classical capacity of :math:`\Phi`.
+    %     numeric: The entanglement-assisted classical capacity of :math:`\Phi` (in bits/use).
     %
     % Note:
     %     Bennett, C. H., Shor, P. W., Smolin, J. A., & Thapliyal, A. V. (2002). 
