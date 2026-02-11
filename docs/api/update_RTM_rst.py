@@ -5,10 +5,10 @@ Run this python file on the root directory of this repository (Attention: Not it
 
 import os
 
-# 项目名称
+# Project name
 _platform_name = "QRLab"
 
-# 忽略的文件列表
+# List of files/folders ignored by API generation
 _ignore_file_names = [
     ".git",
     "_",
@@ -21,7 +21,7 @@ _ignore_file_names = [
     "test_files",
 ]
 
-# Sphinx文档源目录
+# Sphinx documentation source directory
 _sphinx_source_dir = os.path.join(".", "docs", "api", "sphinx_src")
 
 
@@ -34,15 +34,15 @@ def is_correct_directory():
 
 def _list_matlab_files(path=".", base_path="", file_name_attr_list=None):
     """
-    递归列出给定目录中的文件和文件夹。
+    Recursively list files and folders under a given directory.
 
     Args:
-        path (str): 开始列出文件的目录路径。
-        base_path (str, optional): 相对路径计算的基路径。默认为空字符串。
-        file_name_attr_list (list, optional): 用于存储结果的列表。默认为None。
+        path (str): Directory path to start listing from.
+        base_path (str, optional): Base path used for relative-name calculation. Defaults to an empty string.
+        file_name_attr_list (list, optional): Accumulator list for discovered entries. Defaults to None.
 
     Returns:
-        list: 包含每个文件的相对路径和类型（文件夹或MATLAB文件）的元组列表。
+        list: List of tuples containing relative names and entry type (folder or MATLAB file).
     """
     if file_name_attr_list is None:
         file_name_attr_list = []
@@ -54,13 +54,13 @@ def _list_matlab_files(path=".", base_path="", file_name_attr_list=None):
         relative_path = os.path.join(base_path, child).replace(os.path.sep, ".")
 
         if os.path.isdir(child_path):
-            # 递归获取子目录内容
+            # Recursively process subdirectories
             sub_list = _list_matlab_files(child_path, relative_path, [])
-            if sub_list:  # 仅当子目录非空时才添加
+            if sub_list:  # only add non-empty subdirectories
                 file_name_attr_list.append((relative_path, "folder"))
                 file_name_attr_list.extend(sub_list)
         elif child.endswith(".m"):
-            file_name_attr_list.append((relative_path[:-2], "file"))  # 去掉.m扩展名
+            file_name_attr_list.append((relative_path[:-2], "file"))  # strip .m extension
     file_name_attr_list = [
         sub_array
         for sub_array in file_name_attr_list
@@ -74,10 +74,10 @@ def _list_matlab_files(path=".", base_path="", file_name_attr_list=None):
 
 def _update_index_rst(file_name_attr_list):
     """
-    更新index.rst文件。
+    Update index.rst.
 
     Args:
-        file_name_attr_list (list): 文件名属性列表。
+        file_name_attr_list (list): List of file name/type tuples.
     """
     title = f":hide-footer:\nWelcome to {_platform_name}'s documentation!"
     content = f"{title}\n{'=' * len(title)}\n\n"
@@ -105,15 +105,15 @@ def _update_index_rst(file_name_attr_list):
 
 def _update_folder_rst(folder_name, file_name_attr_list):
     """
-    为文件夹生成rst文件。
+    Generate an rst file for a folder.
 
     Args:
-        folder_name (str): 文件夹名称。
-        file_name_attr_list (list): 文件名属性列表。
+        folder_name (str): Folder name.
+        file_name_attr_list (list): List of file name/type tuples.
     """
     content = f"{folder_name}\n{'=' * len(folder_name)}\n\n.. automodule:: {folder_name}\n\n.. toctree::\n   :maxdepth: 1\n\n"
 
-    # 获取子文件夹
+    # Get child folders
     sub_folders = [
         name
         for name, attr in file_name_attr_list
@@ -121,7 +121,7 @@ def _update_folder_rst(folder_name, file_name_attr_list):
         and name.startswith(folder_name)
         and name.count(".") == folder_name.count(".") + 1
     ]
-    # 获取当前目录下的MATLAB文件
+    # Get MATLAB files directly under this folder
     matlab_files = [
         name
         for name, attr in file_name_attr_list
@@ -142,7 +142,7 @@ def _update_folder_rst(folder_name, file_name_attr_list):
 
 def _update_conf_py():
     """
-    更新Sphinx配置文件conf.py。
+    Update Sphinx configuration file conf.py.
     """
     conf_content = """
 import os
