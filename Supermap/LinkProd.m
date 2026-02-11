@@ -28,16 +28,36 @@ function Jout = LinkProd(JA, JB, DIM)
     %       % Link product of two Choi matrices JA and JB:
     %       Jout = LinkProd(JA, JB, [Ain, Aout, Bin, Bout]);
 
+    validateattributes(JA, {'numeric'}, {'2d','nonempty'}, mfilename, 'JA', 1);
+    validateattributes(JB, {'numeric'}, {'2d','nonempty'}, mfilename, 'JB', 2);
+    validateattributes(DIM, {'numeric'}, {'vector','numel',4,'integer','positive'}, mfilename, 'DIM', 3);
 
-    
-% link Aout and Bin
-Ain = DIM(1);
-Aout = DIM(2);
-Bin = DIM(3);
-Bout = DIM(4);
+    Ain = DIM(1);
+    Aout = DIM(2);
+    Bin = DIM(3);
+    Bout = DIM(4);
 
-assert(Aout == Bin, 'Output dimension of channel A does not match with the input dimension of channel B');
+    expectedJA = Ain * Aout;
+    expectedJB = Bin * Bout;
 
-Link = kron(JA, eye(Bout)) * kron(eye(Ain), PartialTranspose(JB,1,[Bin, Bout]));
-Jout = PartialTrace(Link, 2, [Ain, Aout, Bout]);
+    if ~isequal(size(JA), [expectedJA, expectedJA])
+        error('QRLab:Supermap:InvalidJA', ...
+            'JA must be a square matrix of size %d-by-%d for DIM=[%d %d %d %d].', ...
+            expectedJA, expectedJA, Ain, Aout, Bin, Bout);
+    end
+
+    if ~isequal(size(JB), [expectedJB, expectedJB])
+        error('QRLab:Supermap:InvalidJB', ...
+            'JB must be a square matrix of size %d-by-%d for DIM=[%d %d %d %d].', ...
+            expectedJB, expectedJB, Ain, Aout, Bin, Bout);
+    end
+
+    if Aout ~= Bin
+        error('QRLab:Supermap:DimensionMismatch', ...
+            'Output dimension of channel A (%d) must match input dimension of channel B (%d).', Aout, Bin);
+    end
+
+    % Link A_out and B_in.
+    link = kron(JA, eye(Bout)) * kron(eye(Ain), PartialTranspose(JB, 1, [Bin, Bout]));
+    Jout = PartialTrace(link, 2, [Ain, Aout, Bout]);
 end
