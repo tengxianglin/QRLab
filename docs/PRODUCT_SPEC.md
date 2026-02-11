@@ -1,40 +1,33 @@
-# QRLab 产品说明（软著申报版）
+# QRLab Product Specification
 
-## 1. 产品定位
-QRLab 是面向量子信息科学研究与工程验证的 MATLAB 软件工具箱，覆盖纠缠理论、相干理论、魔态理论、拟概率误差消除、超映射与 seesaw 优化等核心能力。
+## 1. Product Positioning
+QRLab is a MATLAB toolbox for research-grade analysis of quantum resources and quantum channels. It is intended for reproducible numerical studies and method prototyping.
 
-## 2. 目标用户
-- 高校与科研院所量子信息方向研究人员
-- 量子算法与量子误差缓解工程研发团队
-- 研究生课程教学与实验平台维护人员
+## 2. Target Users
+- Quantum information researchers
+- Algorithm and error-mitigation engineers
+- Graduate-level teaching and lab-maintenance teams
 
-## 3. 核心功能模块
-- Entanglement（静态与动态纠缠度量、容量分析）
-- Coherence（相干性鲁棒性与通道模拟）
-- Magic（量子比特/多能级魔态分析）
-- QuasiTheory（误差抵消、电路编织、虚拟恢复）
-- Supermap（量子开关与连接积）
-- Seesaw（非凸优化的次优求解流程）
+## 3. Functional Modules
+- `Entanglement/`: static and dynamic entanglement measures and channel capacities
+- `Coherence/`: coherence robustness and simulation workflows
+- `Magic/`: qubit and qudit magic-resource quantification
+- `QuasiTheory/`: error-cancellation and circuit-knitting utilities
+- `Supermap/`: quantum-switch and link-product tools
+- `seesaw/`: non-convex seesaw optimization helpers
 
-## 4. 技术栈与依赖
-- MATLAB（运行与开发环境）
-- QETLAB 0.9（量子信息基础工具）
-- CVX 2.1（凸优化建模）
-- 可选：channel_magic 2.0（部分魔态功能增强）
+## 4. Runtime Dependencies
+- MATLAB desktop runtime
+- QETLAB 0.9
+- CVX 2.1
+- Optional: `channel_magic` 2.0
 
-## 5. 工程规范与可维护性
-- 统一的源码标识头注释（版本化维护标记）
-- 文档化的版本变更记录（CHANGELOG）
-- 规范化代码标准文档（`docs/CODING_STANDARD.md`）
+## 5. Deliverables
+- MATLAB source modules (`.m`)
+- Precomputed data artifacts (`.mat`)
+- Documentation and release metadata (`README.md`, `CHANGELOG.md`, `VERSION`, API script)
 
-## 6. 交付物组成
-- 源代码：按功能模块组织的 MATLAB `.m` 文件
-- 数据资源：`.mat` 预计算矩阵资源
-- 文档：README、API 更新脚本、产品规范与编码标准
-
-## 7. 版本策略
-采用 `MAJOR.MINOR.PATCH` 语义化版本号：
-- MAJOR：不兼容接口或目录结构重大调整
-- MINOR：新增模块、增强能力、规范升级
-- PATCH：缺陷修复、注释修订、文档优化
-
+## 6. Release and Audit Policy
+- Versioning follows `MAJOR.MINOR.PATCH`.
+- Every functional/documentation release requires a changelog entry.
+- Repository-wide cosmetic-only edits are discouraged unless justified by tooling or compliance requirements.

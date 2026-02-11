@@ -1,6 +1,3 @@
-% QRLab Productization Update 2026
-% Module standardized for software registration and long-term maintenance.
-% 模块已按产品化规范补充版本化维护标识。
 function distance = SimulateCoherentChannel(target_channel, resource_state, free_op, varargin)
     % Find the optimal free operation :math:`\mathcal{M}` that minimizes the
     % diamond-norm distance between the simulated channel :math:`\mathcal{M}(\omega \otimes \cdot)`

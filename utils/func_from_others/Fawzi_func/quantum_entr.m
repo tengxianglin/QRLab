@@ -1,6 +1,3 @@
-% QRLab Productization Update 2026
-% Module standardized for software registration and long-term maintenance.
-% 模块已按产品化规范补充版本化维护标识。
 function cvx_optval = quantum_entr(X,m,k,apx)
 
 %QUANTUM_ENTR    Quantum (von Neumann) entropy

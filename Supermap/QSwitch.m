@@ -1,6 +1,3 @@
-% QRLab Productization Update 2026
-% Module standardized for software registration and long-term maintenance.
-% 模块已按产品化规范补充版本化维护标识。
 function [JoutPlus, JoutMinus] = QSwitch(JN, d) 
     % Quantum Switch Choi Matrices for Control System Measurement when we
     % insert two same quantum channels N, and set the control qubit with :math:`|+\rangle`.

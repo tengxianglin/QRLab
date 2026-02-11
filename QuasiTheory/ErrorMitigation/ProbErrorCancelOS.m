@@ -1,6 +1,3 @@
-% QRLab Productization Update 2026
-% Module standardized for software registration and long-term maintenance.
-% 模块已按产品化规范补充版本化维护标识。
 function [overhead, t, JD] = ProbErrorCancelOS(Noise_channel, O)
     % Provide a CPTP map to inverse the Noise_channel with respect to observable :math:`O`
     % with the method called observable shift.

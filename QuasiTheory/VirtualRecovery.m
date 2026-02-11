@@ -1,6 +1,3 @@
-% QRLab Productization Update 2026
-% Module standardized for software registration and long-term maintenance.
-% 模块已按产品化规范补充版本化维护标识。
 function val = VirtualRecovery(rho, dim)
 
     % Compute the virtual recovery measure of a tripartite state :math:`\rho_{ABC}`.

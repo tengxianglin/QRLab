@@ -1,6 +1,3 @@
-% QRLab Productization Update 2026
-% Module standardized for software registration and long-term maintenance.
-% 模块已按产品化规范补充版本化维护标识。
 function rho_out = ApplyQuSwitch(qs_k, rho_t, rho_c)  
     % :Required packages: 
     %   `QETLAB  <http://www.qetlab.com/Main_Page>`_

@@ -1,6 +1,3 @@
-% QRLab Productization Update 2026
-% Module standardized for software registration and long-term maintenance.
-% 模块已按产品化规范补充版本化维护标识。
 function Stab_Vec = Pauli2Stab(A_mat,n_qubit)
     %
     % :Required packages: 

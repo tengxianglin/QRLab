@@ -1,6 +1,3 @@
-% QRLab Productization Update 2026
-% Module standardized for software registration and long-term maintenance.
-% 模块已按产品化规范补充版本化维护标识。
 function cvx_optpnt = matrix_geo_mean_hypo_cone(sz,t,iscplx,fullhyp)
 
 %MATRIX_GEO_MEAN_HYPO_CONE    Matrix geometric mean cone.

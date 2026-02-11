@@ -1,6 +1,3 @@
-% QRLab Productization Update 2026
-% Module standardized for software registration and long-term maintenance.
-% 模块已按产品化规范补充版本化维护标识。
 function Jout = LinkProd(JA, JB, DIM)
     % Link Product of two Quantum channels, where A_out of JA is linked with
     % the B_in of JB.

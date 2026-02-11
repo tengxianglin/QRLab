@@ -1,27 +1,26 @@
-# QRLab 编码规范（产品化维护）
+# QRLab Coding Standard
 
-## 1. 通用原则
-- 代码应优先保证可读性、可复现性与数值稳定性。
-- 模块接口保持向后兼容；若变更需同步更新 `CHANGELOG.md`。
-- 所有核心函数须包含输入、输出和参考文献信息。
+## 1. Scope
+These rules apply to source code, tests, examples, and maintenance scripts in this repository.
 
-## 2. MATLAB 代码规范
-- 文件命名与主函数命名保持一致。
-- 每个源码文件保留维护标识头，便于版本追溯。
-- 参数校验逻辑集中在函数开头，错误信息应明确可定位。
-- CVX 建模区块统一采用 `cvx_begin ... cvx_end`，并控制可读缩进。
+## 2. MATLAB Code Rules
+- Keep file names aligned with the primary function name.
+- Validate critical inputs at function boundaries.
+- Use explicit, actionable error messages for invalid dimensions/types.
+- Keep CVX blocks readable and localized (`cvx_begin ... cvx_end`).
+- Avoid no-op edits (such as mass header-only changes) unless required by an automated pipeline.
 
-## 3. 文档规范
-- README 保持中英双语关键说明。
-- 新增模块需补充：功能说明、依赖关系、最小示例。
-- 教程脚本命名应表达应用场景与研究目标。
+## 3. Documentation Rules
+- `README.md` should reflect actual runtime dependencies and onboarding steps.
+- New or behavior-changing features should include at least one usage example or test reference.
+- Scripts under `docs/` must include clear invocation instructions.
 
-## 4. 测试与验证
-- 提交前至少执行关键路径脚本或测试样例。
-- 若环境不完整（缺 MATLAB/CVX），需在提交说明中明确记录。
-- 对数值算法改动需附带基准输入与结果对比。
+## 4. Change Management
+- Update `VERSION` and `CHANGELOG.md` together for each release.
+- Describe validation commands in PR descriptions.
+- Keep PR scope narrow and technically justified.
 
-## 5. 变更留痕
-- 每次版本升级更新 `VERSION` 与 `CHANGELOG.md`。
-- 重要目录调整应记录迁移说明。
-- 软著准备期间，文档、注释、脚本更新均视作有效迭代痕迹。
+## 5. Validation Expectations
+- Run syntax or smoke checks for modified scripts.
+- For behavior changes, run relevant test files in `test_files/` where environment allows.
+- If an environment limitation prevents execution (e.g., missing MATLAB), explicitly document it.

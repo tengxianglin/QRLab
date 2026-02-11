@@ -1,6 +1,3 @@
-% QRLab Productization Update 2026
-% Module standardized for software registration and long-term maintenance.
-% 模块已按产品化规范补充版本化维护标识。
 function probability = SimulateCoherentChannelProb(target_channel, resource_state, free_op, error_tolerance, varargin)
     % Find the maximal success probability :math:`p` to simulate the target channel
     % using free operations :math:`\mathcal{M}` and a resource state :math:`\omega`,
