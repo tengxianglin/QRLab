@@ -1,3 +1,6 @@
+% QRLab Productization Update 2026
+% Module standardized for software registration and long-term maintenance.
+% 模块已按产品化规范补充版本化维护标识。
 function result = compute_entanglement_measures(rho_in, opts)
 % COMPUTE_ENTANGLEMENT_MEASURES
 %  Dispatcher for common entanglement measures. Supports selective

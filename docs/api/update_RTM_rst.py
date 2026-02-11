@@ -1,7 +1,13 @@
 """
-How to use?
-Run this python file on the root directory of this repository (Attention: Not its subdirectory) and then all files in source will be generated.
+QRLab API 文档生成脚本（产品化维护版）
+
+Usage:
+1. 在仓库根目录执行本脚本（不要在子目录执行）。
+2. 脚本将扫描 MATLAB 源码并更新 docs/api/sphinx_src 下的 rst/conf 文件。
+
+This script is maintained as part of QRLab software-registration traceability work.
 """
+
 
 import os
 

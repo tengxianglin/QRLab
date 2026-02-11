@@ -1,3 +1,6 @@
+% QRLab Productization Update 2026
+% Module standardized for software registration and long-term maintenance.
+% 模块已按产品化规范补充版本化维护标识。
 function val = MaxLogNeg(JN, dim)
     % Compute the generalized :math:`\kappa`-entanglement (max-logarithmic negativity) of a bipartite channel.
     %

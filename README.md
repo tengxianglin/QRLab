@@ -134,3 +134,29 @@ The development of the software package is partially supported by the National K
 
 We acknowledge the CVXQUAD package (https://github.com/hfawzi/cvxquad) for MATLAB-based convex optimization utilities including von Neumann entropy and quantum relative entropy, which have been valuable in this research.
 感谢 CVXQUAD（https://github.com/hfawzi/cvxquad）提供的基于 MATLAB 的凸优化工具（如冯诺依曼熵、量子相对熵），对本项目研究帮助甚大。
+
+
+## Productization Status | 产品化状态
+- Current release line: `0.2.0` (software-registration preparation snapshot).
+- 当前版本线：`0.2.0`（软著申报准备快照）。
+- Traceability artifacts:
+  - `CHANGELOG.md`
+  - `docs/PRODUCT_SPEC.md`
+  - `docs/CODING_STANDARD.md`
+
+## Engineering Governance | 工程治理
+- Source modules include unified maintenance headers for repository-wide version traceability.
+- 代码模块已添加统一维护标识头，便于版本审计与工程追踪。
+- Recommended branch policy: `main` for stable release, feature branches for module evolution.
+- 建议分支策略：`main` 用于稳定发布，功能分支用于模块演进。
+
+## Compliance Preparation Notes | 软著材料准备说明
+For software copyright filing, keep the following materials synchronized:
+- Product overview (`docs/PRODUCT_SPEC.md`)
+- Coding and maintenance standard (`docs/CODING_STANDARD.md`)
+- Version and change history (`VERSION` + `CHANGELOG.md`)
+
+软著申报时请保持以下材料同步：
+- 产品说明（`docs/PRODUCT_SPEC.md`）
+- 编码与维护规范（`docs/CODING_STANDARD.md`）
+- 版本与变更记录（`VERSION` + `CHANGELOG.md`）

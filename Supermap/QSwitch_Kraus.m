@@ -1,3 +1,6 @@
+% QRLab Productization Update 2026
+% Module standardized for software registration and long-term maintenance.
+% 模块已按产品化规范补充版本化维护标识。
 function QS_K = QSwitch_Kraus(Kraus_o1,Kraus_o2)
     % Two :math:`n`-qubit quantum channels :math:`\mathcal{N}_1` and :math:`\mathcal{N}_2` have Kraus representations :math:`\{E_i\}_i` and :math:`\{F_j\}_j`
     %

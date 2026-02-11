@@ -1,3 +1,6 @@
+% QRLab Productization Update 2026
+% Module standardized for software registration and long-term maintenance.
+% 模块已按产品化规范补充版本化维护标识。
 function cvx_optpnt = op_rel_entr_epi_cone(sz,iscplx,m,k,e,apx)
 
 %OP_REL_ENTR_EPI_CONE    Operator relative entropy cone

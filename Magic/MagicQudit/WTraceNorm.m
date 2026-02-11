@@ -1,3 +1,6 @@
+% QRLab Productization Update 2026
+% Module standardized for software registration and long-term maintenance.
+% 模块已按产品化规范补充版本化维护标识。
 function [output] = WTraceNorm(PhaseOp, rho)
     % Compute the Wigner trace norm of a linear operator with respect to a phase-space frame.
     %
