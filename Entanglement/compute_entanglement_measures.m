@@ -1,108 +1,127 @@
-function result = compute_entanglement_measures(rho_in, opts)
-% COMPUTE_ENTANGLEMENT_MEASURES
-%  Dispatcher for common entanglement measures. Supports selective
-%  evaluation, custom extensions, basic preprocessing (Hermitization and
-%  trace normalization), and optional tabular output.
+function result = compute_entanglement_measures(rhoIn, opts)
+%COMPUTE_ENTANGLEMENT_MEASURES Evaluate a configurable set of measures.
+%   RESULT = COMPUTE_ENTANGLEMENT_MEASURES(RHOIN, OPTS) evaluates requested
+%   entanglement-related metrics and returns either a struct or a table.
 %
-% Inputs:
-%   rho_in : Density matrix (state) or channel Choi matrix.
-%   opts   : struct with optional fields:
-%            .dims            - [d_A, d_B]; if empty, infer square dims (default: []).
-%            .measures        - cell array of measure names to evaluate
-%                               (default: {'LogNeg','RainsBound','MaxRainsEntropy','TemperedLogNeg'}).
-%            .custom_measures - struct; each field is a label, each value a
-%                               function handle f(rho, dims) -> scalar.
-%            .return_table    - true/false; return a table if true (default: false).
-%            .normalize_trace - true/false; Hermitize and normalize if true (default: true).
+%   Syntax
+%   ------
+%   result = compute_entanglement_measures(rhoIn)
+%   result = compute_entanglement_measures(rhoIn, opts)
 %
-% Output:
-%   result : struct with fields per measure (value, elapsed) plus a meta field,
-%            or a table with columns Measure, Value, Elapsed when opts.return_table is true.
+%   Inputs
+%   ------
+%   rhoIn : square numeric matrix
+%       Input density matrix (or compatible operator matrix).
+%   opts : struct (optional)
+%       Optional fields:
+%       - dims            : [dA dB], inferred from size(rhoIn) if empty.
+%       - measures        : cellstr of built-in/custom measure names.
+%       - custom_measures : struct of function handles f(rho,dims) -> scalar.
+%       - return_table    : logical, return table instead of struct.
+%       - normalize_trace : logical, hermitize and normalize trace.
+%
+%   Output
+%   ------
+%   result : struct or table
+%       Measure values and timing metadata.
 
-% ---------- Option handling ----------
-if ~exist('opts','var') || isempty(opts)
-    opts = struct();
+arguments
+    rhoIn (:,:) {mustBeNumeric}
+    opts.dims (1,:) {mustBeInteger, mustBePositive} = []
+    opts.measures cell = {'LogNeg','RainsBound','MaxRainsEntropy','TemperedLogNeg'}
+    opts.custom_measures struct = struct()
+    opts.return_table (1,1) logical = false
+    opts.normalize_trace (1,1) logical = true
 end
-if ~isfield(opts,'dims');            opts.dims = []; end
-if ~isfield(opts,'measures');        opts.measures = {'LogNeg','RainsBound','MaxRainsEntropy','TemperedLogNeg'}; end
-if ~isfield(opts,'custom_measures'); opts.custom_measures = struct(); end
-if ~isfield(opts,'return_table');    opts.return_table = false; end
-if ~isfield(opts,'normalize_trace'); opts.normalize_trace = true; end
 
-t_start = tic;
+if size(rhoIn, 1) ~= size(rhoIn, 2)
+    error('QRLab:ComputeEntanglementMeasures:NonSquareInput', ...
+        'rhoIn must be a square matrix.');
+end
 
-% ---------- preprocess ----------
-rho = rho_in;
+tStart = tic;
+rho = rhoIn;
 if opts.normalize_trace
-    rho = (rho + rho')/2;        % Hermitian 
-    tr_val = trace(rho);
-    if abs(tr_val) > eps
-        rho = rho / tr_val;      % Normalize
+    rho = (rho + rho') / 2;
+    trVal = trace(rho);
+    if abs(trVal) <= eps
+        error('QRLab:ComputeEntanglementMeasures:ZeroTrace', ...
+            'Cannot normalize input with near-zero trace.');
     end
+    rho = rho / trVal;
 end
 
-% ---------- Dimension inference ----------
 if isempty(opts.dims)
-    d = sqrt(max(size(rho)));
+    d = sqrt(size(rho, 1));
     if abs(d - round(d)) > 1e-10
-        error('Automatic dimension inference failed: matrix size is not a perfect square. Specify opts.dims manually.');
+        error('QRLab:ComputeEntanglementMeasures:DimensionInferenceFailed', ...
+            ['Automatic dimension inference failed. Set opts.dims ', ...
+             'explicitly as [dA dB].']);
     end
-    dims = round(d) * [1, 1];
+    dims = [round(d), round(d)];
 else
     dims = opts.dims;
 end
-if isempty(dims)
-    error('System dimensions are undefined. Please set opts.dims.');
+
+if numel(dims) ~= 2 || prod(dims) ~= size(rho, 1)
+    error('QRLab:ComputeEntanglementMeasures:DimensionMismatch', ...
+        'opts.dims must contain two subsystem dimensions whose product matches size(rhoIn,1).');
 end
 
-% ---------- Built-in measure map ----------
-available.LogNeg            = @(rho,d) LogNeg(rho, d);
-available.RainsBound        = @(rho,d) RainsBound(rho, d);
-available.MaxRainsEntropy   = @(rho,d) MaxRains(rho, d);
-available.TemperedLogNeg    = @(rho,d) TempLogNeg(rho, d);
+available.LogNeg = @(state, dIn) LogNeg(state, dIn);
+available.RainsBound = @(state, dIn) RainsBound(state, dIn);
+available.MaxRainsEntropy = @(state, dIn) MaxRains(state, dIn);
+available.TemperedLogNeg = @(state, dIn) TempLogNeg(state, dIn);
 
-% ---------- Merge custom measures ----------
-measure_map = available;
-user_fields = fieldnames(opts.custom_measures);
-for k = 1:numel(user_fields)
-    name = user_fields{k};
-    measure_map.(name) = opts.custom_measures.(name);
+measureMap = available;
+userFields = fieldnames(opts.custom_measures);
+for k = 1:numel(userFields)
+    name = userFields{k};
+    candidate = opts.custom_measures.(name);
+    if ~isa(candidate, 'function_handle')
+        error('QRLab:ComputeEntanglementMeasures:InvalidCustomMeasure', ...
+            'Custom measure "%s" must be a function handle.', name);
+    end
+    measureMap.(name) = candidate;
 end
 
-% ---------- Evaluation ----------
-measures_requested = opts.measures;
-result_struct = struct();
-for idx = 1:numel(measures_requested)
-    name = measures_requested{idx};
-    if ~isfield(measure_map, name)
-        warning('Measure %s is not registered and will be skipped.', name);
+resultStruct = struct();
+for idx = 1:numel(opts.measures)
+    name = opts.measures{idx};
+    if ~ischar(name) && ~isstring(name)
+        error('QRLab:ComputeEntanglementMeasures:InvalidMeasureName', ...
+            'Each measure name must be a character vector or string scalar.');
+    end
+    name = char(name);
+    if ~isfield(measureMap, name)
+        warning('QRLab:ComputeEntanglementMeasures:UnknownMeasure', ...
+            'Measure "%s" is not registered and was skipped.', name);
         continue;
     end
-    fn = measure_map.(name);
-    t_local = tic;
+    fn = measureMap.(name);
+    tLocal = tic;
     value = fn(rho, dims);
-    result_struct.(name) = struct('value', value, 'elapsed', toc(t_local));
+    resultStruct.(name) = struct('value', value, 'elapsed', toc(tLocal));
 end
 
-result_struct.meta = struct(...
+resultStruct.meta = struct(...
     'dims', dims, ...
     'trace', trace(rho), ...
-    'elapsed_total', toc(t_start));
+    'elapsed_total', toc(tStart));
 
-% ---------- Output ----------
 if opts.return_table
-    measure_names = fieldnames(result_struct);
-    measure_names = measure_names(~strcmp(measure_names,'meta'));
-    values  = zeros(numel(measure_names), 1);
-    elapsed = zeros(numel(measure_names), 1);
-    for k = 1:numel(measure_names)
-        m = measure_names{k};
-        values(k)  = result_struct.(m).value;
-        elapsed(k) = result_struct.(m).elapsed;
+    measureNames = fieldnames(resultStruct);
+    measureNames = measureNames(~strcmp(measureNames, 'meta'));
+    values = zeros(numel(measureNames), 1);
+    elapsed = zeros(numel(measureNames), 1);
+    for k = 1:numel(measureNames)
+        m = measureNames{k};
+        values(k) = resultStruct.(m).value;
+        elapsed(k) = resultStruct.(m).elapsed;
     end
-    result = table(measure_names, values, elapsed, ...
-        'VariableNames', {'Measure','Value','Elapsed'});
+    result = table(measureNames, values, elapsed, ...
+        'VariableNames', {'Measure', 'Value', 'Elapsed'});
 else
-    result = result_struct;
+    result = resultStruct;
 end
 end

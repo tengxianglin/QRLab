@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+title: QRLab
+message: "If you use QRLab, please cite this software."
+type: software
+authors:
+  - family-names: Lin
+    given-names: Tengxiang
+repository-code: "https://github.com/tengxianglin/QRLab"
+version: 0.1.0
+license: "SEE LICENSE IN REPOSITORY"

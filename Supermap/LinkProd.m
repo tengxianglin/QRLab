@@ -1,43 +1,59 @@
-function Jout = LinkProd(JA, JB, DIM)
-    % Link Product of two Quantum channels, where A_out of JA is linked with
-    % the B_in of JB.
-    %
-    % :Required packages:
-    %   `QETLAB  <http://www.qetlab.com/Main_Page>`_
-    %
-    %
-    % .. math::
-    %
-    %   J_{\mathcal{B} \circ \mathcal{A}} = J_{\mathcal{A}} * J_{\mathcal{B}} = Tr_1[(J_{\mathcal{A}} \otimes I_2)
-    %   \cdot (I_0 \otimes J_{\mathcal{B}}^{T_1})],
-    %
-    % Args:
-    %     JA (numeric): The choi matrix of the quantum channel A.
-    %     JB (numeric): The choi matrix of the quantum channel B.
-    %     DIM (int): The dimensions of channel A and channel B.
-    %
-    % Returns:
-    %     numeric: Resulting Choi matrix of the link product of two Choi matrices JA and JB.
-    %
-    % Raises:
-    %     error: If the dimension of the input state does not match with the pure stabilizer state matrix, an error is raised.
-    %
-    % :Examples:
-    %   .. code-block:: matlab
-    %
-    %       % Link product of two Choi matrices JA and JB:
-    %       Jout = LinkProd(JA, JB, [Ain, Aout, Bin, Bout]);
+function Jout = LinkProd(JA, JB, dim)
+%LINKPROD Compute the link product of two channel Choi matrices.
+%   JOUT = LINKPROD(JA, JB, DIM) links the output subsystem of channel A to
+%   the input subsystem of channel B. DIM = [Ain, Aout, Bin, Bout].
+%
+%   Syntax
+%   ------
+%   Jout = LinkProd(JA, JB, dim)
+%
+%   Inputs
+%   ------
+%   JA : square numeric matrix
+%       Choi matrix of channel A.
+%   JB : square numeric matrix
+%       Choi matrix of channel B.
+%   dim : 1x4 integer vector
+%       [Ain, Aout, Bin, Bout]. Requires Aout == Bin.
+%
+%   Output
+%   ------
+%   Jout : numeric matrix
+%       Choi matrix of the composed channel B o A.
+%
+%   Notes
+%   -----
+%   Requires QETLAB functions PartialTranspose and PartialTrace.
 
+arguments
+    JA (:,:) {mustBeNumeric}
+    JB (:,:) {mustBeNumeric}
+    dim (1,4) {mustBeInteger, mustBePositive}
+end
 
-    
-% link Aout and Bin
-Ain = DIM(1);
-Aout = DIM(2);
-Bin = DIM(3);
-Bout = DIM(4);
+if size(JA, 1) ~= size(JA, 2) || size(JB, 1) ~= size(JB, 2)
+    error('QRLab:LinkProd:NonSquareInput', 'JA and JB must be square matrices.');
+end
 
-assert(Aout == Bin, 'Output dimension of channel A does not match with the input dimension of channel B');
+Ain = dim(1);
+Aout = dim(2);
+Bin = dim(3);
+Bout = dim(4);
 
-Link = kron(JA, eye(Bout)) * kron(eye(Ain), PartialTranspose(JB,1,[Bin, Bout]));
-Jout = PartialTrace(Link, 2, [Ain, Aout, Bout]);
+if Aout ~= Bin
+    error('QRLab:LinkProd:IncompatibleDimensions', ...
+        'Aout must equal Bin. Received Aout=%d and Bin=%d.', Aout, Bin);
+end
+
+if size(JA, 1) ~= Ain * Aout
+    error('QRLab:LinkProd:JAInconsistentSize', ...
+        'size(JA,1) must equal Ain*Aout. Received %d and %d.', size(JA, 1), Ain * Aout);
+end
+if size(JB, 1) ~= Bin * Bout
+    error('QRLab:LinkProd:JBInconsistentSize', ...
+        'size(JB,1) must equal Bin*Bout. Received %d and %d.', size(JB, 1), Bin * Bout);
+end
+
+link = kron(JA, eye(Bout)) * kron(eye(Ain), PartialTranspose(JB, 1, [Bin, Bout]));
+Jout = PartialTrace(link, 2, [Ain, Aout, Bout]);
 end

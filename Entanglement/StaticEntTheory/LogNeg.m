@@ -1,46 +1,60 @@
 function val = LogNeg(rho, varargin)
-    % Compute the logarithmic negativity of a bipartite state.
-    %
-    % .. math::
-    %
-    %     E_{\operatorname{N}}(\rho_{AB}) = \log\|\rho^{T_{B}}_{AB}\|_1.
-    %
-    % Args:
-    %   rho (numeric): The density matrix of the bipartite state.
-    %   varargin (numeric): The array storing dimensions of subsystems A and B.
-    %
-    % Returns:
-    %   numeric: The logarithmic negativity of :math:`\rho_{AB}`.
-    %
-    % Raises:
-    %   error: If either input/output dimension does not match, an error is raised.
-    %
-    % Note:    
-    %   Plenio, M. B. (2005). 
-    %   Logarithmic negativity: a full entanglement monotone that is not convex. 
-    %   Physical review letters, 95(9), 090503.
+%LOGNEG Compute the logarithmic negativity of a bipartite state.
+%   VAL = LOGNEG(RHO) assumes equal local dimensions inferred from RHO.
+%   VAL = LOGNEG(RHO, DIMS) uses subsystem dimensions DIMS = [dA dB].
+%
+%   Inputs
+%   ------
+%   rho : square numeric matrix
+%       Bipartite density matrix.
+%   dims : 1x2 integer vector (optional)
+%       Subsystem dimensions [dA dB].
+%
+%   Output
+%   ------
+%   val : double scalar
+%       Logarithmic negativity, log2(||rho^{T_B}||_1).
 
-    if nargin<2
-        omega = rho;
-        d = sqrt(max(size(rho)))*[1,1];
-    elseif nargin==2
-        if min(size(varargin{1})) == 1
-            omega = rho;
-            d = varargin{1} * ones(1,3-max(size(varargin{1})));
-        else
-            omega = varargin{1};
-            d = sqrt(max(size(rho)))*[1,1];
-        end
+if size(rho, 1) ~= size(rho, 2)
+    error('QRLab:LogNeg:NonSquareInput', 'rho must be a square matrix.');
+end
+
+if nargin < 2
+    dLocal = sqrt(size(rho, 1));
+    if abs(dLocal - round(dLocal)) > 1e-10
+        error('QRLab:LogNeg:DimensionInferenceFailed', ...
+            'Failed to infer equal local dimensions; pass dims explicitly as [dA dB].');
     end
+    dims = [round(dLocal) round(dLocal)];
+else
+    raw = varargin{1};
+    if isvector(raw)
+        dims = raw(:).';
+        if numel(dims) == 1
+            dims = [dims dims];
+        end
+    else
+        warning('QRLab:LogNeg:DeprecatedSecondMatrixInput', ...
+            ['Passing a matrix as the second input is deprecated and ignored. ', ...
+             'Pass dimensions as [dA dB] instead.']);
+        dLocal = sqrt(size(rho, 1));
+        dims = [round(dLocal) round(dLocal)];
+    end
+end
 
-    dA = d(1);
-    dB = d(2);
-    dAB = dA*dB;
+if numel(dims) ~= 2 || any(dims < 1) || prod(dims) ~= size(rho, 1)
+    error('QRLab:LogNeg:InvalidDimensions', ...
+        'dims must be [dA dB] with prod(dims) == size(rho,1).');
+end
+
+dA = dims(1);
+dB = dims(2);
+dAB = dA * dB;
 
 cvx_begin sdp quiet
     variable R(dAB, dAB) hermitian
-    rho_TB = PartialTranspose(rho, 2, [dA, dB]);
-    t = real(trace(rho_TB * R));
+    rhoTB = PartialTranspose(rho, 2, [dA, dB]);
+    t = real(trace(rhoTB * R));
     maximize t
     subject to
         -eye(dAB) <= R <= eye(dAB);
@@ -48,4 +62,3 @@ cvx_end
 
 val = log2(t);
 end
-
