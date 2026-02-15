@@ -1,7 +1,13 @@
 """
-How to use?
-Run this python file on the root directory of this repository (Attention: Not its subdirectory) and then all files in source will be generated.
+QRLab API 文档生成脚本（产品化维护版）
+
+Usage:
+1. 在仓库根目录执行本脚本（不要在子目录执行）。
+2. 脚本将扫描 MATLAB 源码并更新 docs/api/sphinx_src 下的 rst/conf 文件。
+
+This script is maintained as part of QRLab software-registration traceability work.
 """
+
 
 import os
 
@@ -26,10 +32,9 @@ _sphinx_source_dir = os.path.join(".", "docs", "api", "sphinx_src")
 
 
 def is_correct_directory():
-    script_path = os.path.abspath(__file__)
-    script_dir = os.path.dirname(script_path)
-    required_file = os.path.join(script_dir, "docs", "api")
-    return os.path.exists(required_file)
+    """Return True when this script is executed from the repository root."""
+    cwd = os.path.abspath(os.getcwd())
+    return os.path.exists(os.path.join(cwd, "docs", "api"))
 
 
 def _list_matlab_files(path=".", base_path="", file_name_attr_list=None):
